@@ -2,7 +2,7 @@
   "name": "node-express",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/user.js",
+  "main": "dist/app.js",
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
@@ -10,7 +10,7 @@
     "start": "node .",
     "local": "run-s prebuild build start",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "debug": "node --nolazy --inspect-brk=5858 dist/user.js"
+    "debug": "node --nolazy --inspect-brk=5858 dist/app.js"
   },
   "keywords": [],
   "author": "Yoga-daggula",
