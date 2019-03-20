@@ -8,10 +8,15 @@ import morgan from "morgan";
 import path from "path";
 import "./controller/HomeController ";
 import winston from "winston";
+import { Utils } from "./util/Utils";
+import os from "os";
+import { HomeService } from "./service/HomeService";
+import TYPES from "./util/Types";
 
 // load everything needed to the Container
 const container = new Container();
 
+container.bind<HomeService>(TYPES.HomeService).to(HomeService);
 // start the server
 const server = new InversifyExpressServer(container);
 
@@ -19,12 +24,7 @@ const server = new InversifyExpressServer(container);
 
 const properties = dotenv.config();
 
-if (process.env.yoga !== null) {
-console.log(process.env.yoga);
-console.log(properties);
-}
-
-  // create a write stream (in append mode)
+// create a write stream (in append mode)
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "access.log"), { flags: "a" });
 
 server.setConfig((app) => {
@@ -32,8 +32,12 @@ server.setConfig((app) => {
     extended: true
   }));
   app.use(bodyParser.json());
-// setup the logger
+  // setup the logger
   app.use(morgan("combined"));
+  app.use(function (err: any, req: any, res: any, next: any) {
+    console.error(err.stack)
+    res.status(500).send('Something broke!')
+  })
 });
 
 const options = {
@@ -50,6 +54,12 @@ export const logger = winston.createLogger({
     new winston.transports.Console(options.console)
   ]
 });
-
 const serverInstance = server.build();
-serverInstance.listen(3000);
+try {
+  serverInstance.listen(Utils.getPort());
+} catch (error) {
+  console.log(error);
+}
+
+console.log(`Application started on port: ${Utils.getPort()}`);
+console.log(`Use http://localhost:${Utils.getPort()}/`);

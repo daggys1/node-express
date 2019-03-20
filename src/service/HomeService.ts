@@ -5,15 +5,12 @@ import axios, { AxiosRequestConfig, AxiosPromise } from "axios";
 export class HomeService {
 
     public async getUserDetails(): Promise<any> {
-        let resp = null;
-        axios.get("https://api.github.com/users/daggys1")
-            .then((res) => {
-                console.log(res);
-                resp = res;
-            }).catch((err) => {
-                console.log(err);
-            });
-        return resp;
+        try {
+            const response = await axios.get("https://api.github.com/users/daggys1");
+            return (response.data);;
+        } catch (error) {
+            console.log(error);
+        }
 
     }
 
