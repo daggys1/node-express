@@ -34,10 +34,6 @@ server.setConfig((app) => {
   app.use(bodyParser.json());
   // setup the logger
   app.use(morgan("combined"));
-  app.use(function (err: any, req: any, res: any, next: any) {
-    console.error(err.stack)
-    res.status(500).send('Something broke!')
-  })
 });
 
 const options = {

@@ -4,10 +4,10 @@ import axios, { AxiosRequestConfig, AxiosPromise } from "axios";
 @injectable()
 export class HomeService {
 
-    public async getUserDetails(): Promise<any> {
+    public async getUserDetails(id: string): Promise<any> {
         try {
-            const response = await axios.get("https://api.github.com/users/daggys1");
-            return (response.data);;
+            const response = await axios.get(`https://api.github.com/users/${id}`);
+            return (response.data);
         } catch (error) {
             console.log(error);
         }
