@@ -5,7 +5,8 @@
     "cwd": "${workspaceFolder}",
     "runtimeExecutable": "npm",
     "runtimeArgs": [
-        "run-script", "debug"
+        "run-script",
+        "debug"
     ],
     "port": 9229
 }
